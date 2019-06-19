@@ -20,17 +20,9 @@ identifier = 0
 def choose_move(game, player):
     global forbidden_moves
     board = game.board
-    # print(board)
 
-    new_board = []
-    for column in board:
-        new_column = []
-        for element in column:
-            new_column.append(str(element))
-        new_board.append(new_column)
-        new_column = []
-    board = new_board
-    # print(board)
+    board = utils.int2str_board(board)
+
 
 
     if(player == 1):    # last_player is opposite of current player
@@ -653,32 +645,42 @@ class Game:
 ###### SERVER ######
 
 game = Game()
-game.init_board()
 
-board = game.board
-fim = False
+nGames = 10
 
-while(fim == False):
-    player = game.player
-    start = datetime.datetime.now()
-    move = choose_move(game, player)
-    end = datetime.datetime.now()
-    diff = end-start
-    print("Player " + str(player) + ", MOVE  " + str(move) + ", TIME " + str(diff))
-    resp = game.make_move(player, move[0]+1, move[1]+1)
-    # print(resp)
+for i in range(0,nGames):
+    game.init_board()
+    print("PARTIDA " + str(i))
+    
+    if(i%2 == 0):
+        game.player = 1
+    else:
+        game.player = 2
 
-    ganhador = game.is_final_state()
-    if(ganhador != None):
-        print("WINNER " + str(ganhador))
-        utils.count_occurrences(board, player)
-        print("FOI")
-        utils.print_occurrences()
-        fim = True
+    fim = False
 
-    moves = game.get_available_moves()
-    if(len(moves) == 0):
-        print("EMPATE")
-        fim = True
+    while(fim == False):
+        player = game.player
+        start = datetime.datetime.now()
+        move = choose_move(game, player)
+        end = datetime.datetime.now()
+        diff = end-start
+        # print("Player " + str(player) + ", MOVE  " + str(move) + ", TIME " + str(diff))
+        resp = game.make_move(player, move[0]+1, move[1]+1)
+        # print(resp)
 
+        ganhador = game.is_final_state()
+        if(ganhador != None):
+            print("WINNER " + str(ganhador))
+            print(game.board)
+            utils.count_occurrences(utils.int2str_board(game.board), player)
+            utils.print_occurrences()
+            fim = True
 
+        moves = game.get_available_moves()
+        if(len(moves) == 0):
+            print("EMPATE")
+            print(game.board)
+            fim = True
+
+    print("\n########################################################\n")
