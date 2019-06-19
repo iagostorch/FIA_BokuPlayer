@@ -6,6 +6,8 @@ from flask_socketio import SocketIO, emit
 import node
 import utils
 import c
+import c1
+import c2
 import random
 import datetime
 
@@ -126,11 +128,11 @@ def minimax_alphabeta(curr_node, player, alpha, beta):
     identifier += 1
     
     if(curr_node.get_depth() >= c.max_depth):   # if we hit max depth, recursion is stopped
-        score = utils.calc_differential_score(curr_node.get_board(), player)
+        score = utils.calc_differential_score_distinct_weights(curr_node.get_board(), player)
         curr_node.set_score(score)
         return score
     elif(curr_node.is_final()):                 # if current state is final, recursion is stopped
-        score = utils.calc_differential_score(curr_node.get_board(), player)
+        score = utils.calc_differential_score_distinct_weights(curr_node.get_board(), player)
         curr_node.set_score(score)
         return score
 

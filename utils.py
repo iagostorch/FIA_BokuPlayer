@@ -2,7 +2,21 @@
 #		to allow overlapping empty spots -> 0110110
 
 import c
+import c1
+import c2
+
 from multiprocessing import Pool
+
+
+def int2str_board(board):
+    new_board = []
+    for column in board:
+        new_column = []
+        for element in column:
+            new_column.append(str(element))
+        new_board.append(new_column)
+        new_column = []
+    return new_board
 
 
 def remove_forbidden_moves(moves, forbidden_moves):
@@ -166,7 +180,7 @@ def print_occurrences():
 	print("   MAKE_SANDWISH      " + str(c.P2_OCCUR_MAKE_SANDWISH))
 
 def count_occurrences(board, player):
-
+	# print(board)
 
 	c.P1_OCCUR_FIVE_SEQ  = eval_five_seq(board, 1)
 	c.P1_OCCUR_FOUR_SEQ  = eval_four_seq(board, 1)
@@ -241,6 +255,63 @@ def calc_differential_score(board, player):
 	block_five_empty_p2  = c.BLOCK_FIVE_EMPTY * eval_block_five_empty(board, 2)
 
 	make_sandwish_p2	 = c.MAKE_SANDWISH * eval_make_sandwish(board, 2)
+
+	total_score_p2 = 	five_seq_p2 + four_seq_p2 + three_seq_p2 + two_seq_p2 + extra_empty_edges_two_p2 + extra_empty_edges_three_p2 + extra_empty_edges_four_p2 +block_two_seq_p2 + block_three_seq_p2 + block_four_seq_p2 + block_three_empty_p2 + block_four_empty_p2 + block_five_empty_p2 + make_sandwish_p2
+	# print("Score P2 " + str(total_score_p2))
+
+	differential_score = total_score_p1 - total_score_p2
+
+
+	# print(board)
+	# print("P1 " + str(total_score_p1) + "\t" + "P2 " + str(total_score_p2))
+	# print(differential_score)
+	# print()
+
+	return differential_score
+
+
+def calc_differential_score_distinct_weights(board, player):
+	five_seq_p1  = c1.FIVE_SEQ  * eval_five_seq(board, 1)
+	four_seq_p1  = c1.FOUR_SEQ  * eval_four_seq(board, 1)
+	three_seq_p1 = c1.THREE_SEQ * eval_three_seq(board, 1)
+	two_seq_p1   = c1.TWO_SEQ   * eval_two_seq(board, 1)
+
+	extra_empty_edges_two_p1 = c1.EXTRA_EMPTY_EDGES_TWO   * eval_empty_edges_two(board, 1)
+	extra_empty_edges_three_p1 = c1.EXTRA_EMPTY_EDGES_TWO * eval_empty_edges_three(board, 1)
+	extra_empty_edges_four_p1 = c1.EXTRA_EMPTY_EDGES_TWO  * eval_empty_edges_four(board, 1)
+
+	block_two_seq_p1   = c1.BLOCK_TWO_SEQ   * eval_block_two_seq(board, 1)
+	block_three_seq_p1 = c1.BLOCK_THREE_SEQ * eval_block_three_seq(board, 1)
+	block_four_seq_p1  = c1.BLOCK_FOUR_SEQ  * eval_block_four_seq(board, 1)
+
+	block_three_empty_p1 = c1.BLOCK_THREE_EMPTY * eval_block_three_empty(board, 1)
+	block_four_empty_p1  = c1.BLOCK_FOUR_EMPTY * eval_block_four_empty(board, 1)
+	block_five_empty_p1  = c1.BLOCK_FIVE_EMPTY * eval_block_five_empty(board, 1)
+
+	make_sandwish_p1	 = c1.MAKE_SANDWISH * eval_make_sandwish(board, 1)
+
+
+	total_score_p1 = 	five_seq_p1 + four_seq_p1 + three_seq_p1 + two_seq_p1 + extra_empty_edges_two_p1 + extra_empty_edges_three_p1 + extra_empty_edges_four_p1 +block_two_seq_p1 + block_three_seq_p1 + block_four_seq_p1 + block_three_empty_p1 + block_four_empty_p1 + block_five_empty_p1 + make_sandwish_p1
+	# print("Score P1 " + str(total_score_p1))
+
+	five_seq_p2  = c2.FIVE_SEQ  * eval_five_seq(board, 2)
+	four_seq_p2  = c2.FOUR_SEQ  * eval_four_seq(board, 2)
+	three_seq_p2 = c2.THREE_SEQ * eval_three_seq(board, 2)
+	two_seq_p2   = c2.TWO_SEQ   * eval_two_seq(board, 2)
+
+	extra_empty_edges_two_p2 = c2.EXTRA_EMPTY_EDGES_TWO   * eval_empty_edges_two(board, 2)
+	extra_empty_edges_three_p2 = c2.EXTRA_EMPTY_EDGES_TWO * eval_empty_edges_three(board, 2)
+	extra_empty_edges_four_p2 = c2.EXTRA_EMPTY_EDGES_TWO  * eval_empty_edges_four(board, 2)
+
+	block_two_seq_p2   = c2.BLOCK_TWO_SEQ   * eval_block_two_seq(board, 2)
+	block_three_seq_p2 = c2.BLOCK_THREE_SEQ * eval_block_three_seq(board, 2)
+	block_four_seq_p2  = c2.BLOCK_FOUR_SEQ  * eval_block_four_seq(board, 2)
+
+	block_three_empty_p2 = c2.BLOCK_THREE_EMPTY * eval_block_three_empty(board, 2)
+	block_four_empty_p2  = c2.BLOCK_FOUR_EMPTY * eval_block_four_empty(board, 2)
+	block_five_empty_p2  = c2.BLOCK_FIVE_EMPTY * eval_block_five_empty(board, 2)
+
+	make_sandwish_p2	 = c2.MAKE_SANDWISH * eval_make_sandwish(board, 2)
 
 	total_score_p2 = 	five_seq_p2 + four_seq_p2 + three_seq_p2 + two_seq_p2 + extra_empty_edges_two_p2 + extra_empty_edges_three_p2 + extra_empty_edges_four_p2 +block_two_seq_p2 + block_three_seq_p2 + block_four_seq_p2 + block_three_empty_p2 + block_four_empty_p2 + block_five_empty_p2 + make_sandwish_p2
 	# print("Score P2 " + str(total_score_p2))
@@ -562,7 +633,7 @@ def find_vertical(board, pieces):
 	found = 0
 	for board_column in board:
 		column = list_to_string(board_column)
-		# print(column)
+		# print((column))
 		a = column.count(pieces)
 		if(a > 0):
 			found += a
