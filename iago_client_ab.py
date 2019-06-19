@@ -277,6 +277,14 @@ while not done:
 	# Se jogador == 0, o jogo acabou e o cliente perdeu
 	if player_turn==0:
 		print("I lose.")
+
+		resp = urllib.request.urlopen("%s/tabuleiro" % host)
+		data = resp.read()
+		board = utils.parse_board_resp(data)
+
+		utils.count_occurrences(board, player)
+		utils.print_occurrences()
+		
 		done = True
 
 	# Se for a vez do jogador
@@ -314,6 +322,14 @@ while not done:
 		# Se com o movimento o jogo acabou, o cliente venceu
 		if msg[0]==0:
 			print("I win")
+			
+			resp = urllib.request.urlopen("%s/tabuleiro" % host)
+			data = resp.read()
+			board = utils.parse_board_resp(data)
+			
+			utils.count_occurrences(board, player)
+			utils.print_occurrences()
+
 			done = True
 		if msg[0]<0:
 			raise Exception(msg[1])
