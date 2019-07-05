@@ -1,5 +1,7 @@
 # AUXILIARY VARIABLES
-max_depth = 2 # max tree depth evaluated
+max_depth = 4 # max tree depth evaluated
+removal_max_depth = 1
+max_time = 20
 
 # SCORES FOR EACH PARAMETER
 TWO_SEQ = 150
@@ -12,7 +14,7 @@ EXTRA_EMPTY_EDGES_THREE = 500
 EXTRA_EMPTY_EDGES_FOUR = 10000	# this state almost guarantees victory
 
 BLOCK_TWO_SEQ = 100
-BLOCK_THREE_SEQ = 1000
+BLOCK_THREE_SEQ = 750
 BLOCK_FOUR_SEQ = 50000
 
 BLOCK_THREE_EMPTY = 150
