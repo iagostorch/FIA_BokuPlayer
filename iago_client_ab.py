@@ -94,6 +94,9 @@ def choose_move(board, player):
 		print("REMOVE PIECE")
 		ab = [-9999999999, 9999999999]
 		score = heuristic_remove(root, player, ab)
+
+		print("score " + str(score))
+
 	else:
 		print("iNSERT PIECE")
 		# score_old = minimax_place(root, player)
@@ -239,7 +242,7 @@ def heuristic_remove(curr_node, player, ab):
 		
 		value = -9999999999
 		for move in moves:
-			new_board = utils.perform_move(copy.deepcopy(curr_node.get_board()), move, 0)
+			new_board = utils.perform_move(copy.deepcopy(curr_node.get_board()), move, player)
 			new_node = node.Node(curr_node, new_board, curr_node.get_depth() + 1, player, move)
 			new_node.set_identifier(identifier)
 
@@ -256,7 +259,7 @@ def heuristic_remove(curr_node, player, ab):
 	else:
 		value = 9999999999
 		for move in moves:
-			new_board = utils.perform_move(copy.deepcopy(curr_node.get_board()), move, 0)
+			new_board = utils.perform_move(copy.deepcopy(curr_node.get_board()), move, player)
 			new_node = node.Node(curr_node, new_board, curr_node.get_depth() + 1, player, move)
 			new_node.set_identifier(identifier)
 
